@@ -1,0 +1,92 @@
+#! /usr/bin/python3
+
+"""Replace the real "cum_confirmed_cases" data in a CSV with pure
+exponential growth. For each "adm1_name", this finds the first and
+last non-empty non-zero entry and replaces the series with exponential
+growth that interpolates from the first to the last value.
+
+The purpose is to test whether the method of estimating the impact of
+NPI will erroneously find impact when there is none. This erroroneous
+impact comes from the use of cumulative confirmed cases instead of
+daily confirmed cases to estimate the growth rate.
+"""
+import csv
+import datetime
+import math
+import sys
+
+from collections import defaultdict
+
+CASES = 'cum_confirmed_cases'
+
+
+def FindFirstLast(entries):
+  """Returns the indices of the first and last non-empty, non-zero rows"""
+  first = None
+  for i, entry in enumerate(entries):
+    if entry[CASES] and int(entry[CASES]) > 0:
+      if first is None:
+        first = i
+      last = i
+  return first, last
+
+
+def SimulateData(entries):
+  out = []
+  first_index, last_index = FindFirstLast(entries)
+  if first_index is None:
+    return entries
+  first = entries[first_index]
+  first_date = datetime.date.fromisoformat(first['date'])
+
+  first_cases = int(first[CASES])
+  last = entries[last_index]
+  last_date = datetime.date.fromisoformat(last['date'])
+  last_cases = int(last[CASES])
+  total_days = (last_date - first_date).days
+  daily_diff = (math.log(last_cases) - math.log(first_cases)) / total_days
+  out.extend(entries[0:first_index])
+  for entry in entries[first_index:last_index+1]:
+    date = datetime.date.fromisoformat(entry['date'])
+    index_day = (last_date - date).days
+    cases = math.exp(
+      math.log(last_cases) -
+      daily_diff * index_day)
+    entry[CASES] = str(int(cases))
+    out.append(entry)
+
+  out.extend(entries[last_index + 1:])
+
+  return out
+
+
+def Process(entries):
+  adm1s = defaultdict(lambda: [])
+  names = []
+  for entry in entries:
+    name = entry['adm1_name']
+    adm1s[name].append(entry)
+    if not names or names[-1] != name:
+      names.append(name)
+  simulated = []
+  for name in names:
+    simulated.extend(SimulateData(adm1s[name]))
+
+  return simulated
+
+
+def main(argv):
+  if len(argv) > 2:
+    raise ValueError('Too many command-line arguments.')
+
+  in_fn = argv[1]
+  with open(in_fn) as csvfile:
+    entries = csv.DictReader(csvfile)
+    simulated = Process(entries)
+    writer = csv.DictWriter(sys.stdout, fieldnames=entries.fieldnames,
+                            lineterminator="\r\n")
+    writer.writeheader()
+    writer.writerows(simulated)
+
+if __name__ == '__main__':
+  main(sys.argv)
