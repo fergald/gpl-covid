@@ -54,6 +54,25 @@ class ExponentialInterpolator(Interpolator):
     return math.exp(math.log(self.first_cases) + self.daily_diff * day)
 
 
+class GeometricInterpolator(Interpolator):
+  """Interpolate from first_cases to last_cases using geometric series."""
+  def __init__(self, first_cases, last_cases, total_days):
+    self.first_cases = first_cases
+    self.last_cases = last_cases
+    self.total_days = total_days
+    self.r = self.SolveR()
+
+  def SolveR(self):
+    """Solves the polynomial equation (sum(first*r^i)) = last."""
+    cum = numpy.poly1d([self.first_cases] * (self.total_days+1))
+    p = cum - numpy.poly1d([self.last_cases])
+    r, = [r for r in p.roots if not numpy.iscomplex(r) and r.real > 0]
+    return r.real
+
+  def CumCases(self, day):
+    return self.first_cases * (self.r**(day+1) - 1)/(self.r-1)
+
+
 def SimulateData(entries):
   out = []
   for entry in entries:
@@ -72,7 +91,8 @@ def SimulateData(entries):
   last_cases = float(last[CASES])
 
   total_days = (last_date - first_date).days
-  interpolator = ExponentialInterpolator(first_cases, last_cases, total_days)
+  interpolator = GeometricInterpolator(first_cases, last_cases, total_days)
+#  interpolator = ExponentialInterpolator(first_cases, last_cases, total_days)
   out.extend(entries[0:first_index])
   for entry in entries[first_index:last_index+1]:
     date = datetime.date.fromisoformat(entry['date'])
