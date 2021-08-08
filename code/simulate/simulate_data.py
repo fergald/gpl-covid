@@ -18,6 +18,8 @@ import sys
 
 from collections import defaultdict
 
+import numpy
+
 #logging.getLogger().setLevel(logging.INFO)
 
 CASES = 'cum_confirmed_cases'
@@ -35,6 +37,23 @@ def FindFirstLast(entries):
   return first, last
 
 
+class Interpolator(object):
+  def CumCases(self, day):
+    raise NotImplemented()
+
+
+class ExponentialInterpolator(Interpolator):
+  """Interpolate from first_cases to last_cases using an exponential."""
+  def __init__(self, first_cases, last_cases, total_days):
+    self.first_cases = first_cases
+    self.last_cases = last_cases
+    self.total_days = total_days
+    self.daily_diff = (math.log(last_cases) - math.log(first_cases)) / total_days
+
+  def CumCases(self, day):
+    return math.exp(math.log(self.first_cases) + self.daily_diff * day)
+
+
 def SimulateData(entries):
   out = []
   for entry in entries:
@@ -43,22 +62,22 @@ def SimulateData(entries):
   if first_index is None:
     logging.info(f"Skipping {entry['adm1_name']}")
     return entries
+
   first = entries[first_index]
   first_date = datetime.date.fromisoformat(first['date'])
-
   first_cases = float(first[CASES])
+
   last = entries[last_index]
   last_date = datetime.date.fromisoformat(last['date'])
   last_cases = float(last[CASES])
+
   total_days = (last_date - first_date).days
-  daily_diff = (math.log(last_cases) - math.log(first_cases)) / total_days
+  interpolator = ExponentialInterpolator(first_cases, last_cases, total_days)
   out.extend(entries[0:first_index])
   for entry in entries[first_index:last_index+1]:
     date = datetime.date.fromisoformat(entry['date'])
-    index_day = (last_date - date).days
-    cases = math.exp(
-      math.log(last_cases) -
-      daily_diff * index_day)
+    index_day = (date-first_date).days
+    cases = interpolator.CumCases(index_day)
     entry[CASES] = str(int(math.floor(cases+.5)))
     logging.info(f"diff {entry[CASES]} {entry[CASES_ORIGINAL]}")
     out.append(entry)
