@@ -18,13 +18,14 @@ import sys
 from collections import defaultdict
 
 CASES = 'cum_confirmed_cases'
+CASES_ORIGINAL = CASES + "_original"
 
 
 def FindFirstLast(entries):
   """Returns the indices of the first and last non-empty, non-zero rows"""
   first = None
   for i, entry in enumerate(entries):
-    if entry[CASES] and int(entry[CASES]) > 0:
+    if entry[CASES] and float(entry[CASES]) > 0:
       if first is None:
         first = i
       last = i
@@ -39,10 +40,10 @@ def SimulateData(entries):
   first = entries[first_index]
   first_date = datetime.date.fromisoformat(first['date'])
 
-  first_cases = int(first[CASES])
+  first_cases = float(first[CASES])
   last = entries[last_index]
   last_date = datetime.date.fromisoformat(last['date'])
-  last_cases = int(last[CASES])
+  last_cases = float(last[CASES])
   total_days = (last_date - first_date).days
   daily_diff = (math.log(last_cases) - math.log(first_cases)) / total_days
   out.extend(entries[0:first_index])
