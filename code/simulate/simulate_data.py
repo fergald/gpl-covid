@@ -12,10 +12,13 @@ daily confirmed cases to estimate the growth rate.
 """
 import csv
 import datetime
+import logging
 import math
 import sys
 
 from collections import defaultdict
+
+#logging.getLogger().setLevel(logging.INFO)
 
 CASES = 'cum_confirmed_cases'
 CASES_ORIGINAL = CASES + "_original"
@@ -36,6 +39,7 @@ def SimulateData(entries):
   out = []
   first_index, last_index = FindFirstLast(entries)
   if first_index is None:
+    logging.info(f"Skipping {entry['adm1_name']}")
     return entries
   first = entries[first_index]
   first_date = datetime.date.fromisoformat(first['date'])
@@ -71,6 +75,7 @@ def Process(entries):
       names.append(name)
   simulated = []
   for name in names:
+    logging.info(f"doing {name}")
     simulated.extend(SimulateData(adm1s[name]))
 
   return simulated
