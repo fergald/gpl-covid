@@ -67,7 +67,7 @@ def Process(entries):
   for entry in entries:
     name = entry['adm1_name']
     adm1s[name].append(entry)
-    if not names or names[-1] != name:
+    if name not in names:
       names.append(name)
   simulated = []
   for name in names:
