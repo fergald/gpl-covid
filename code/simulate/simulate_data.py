@@ -59,7 +59,7 @@ def SimulateData(entries):
     cases = math.exp(
       math.log(last_cases) -
       daily_diff * index_day)
-    entry[CASES] = str(int(cases))
+    entry[CASES] = str(int(math.floor(cases+.5)))
     logging.info(f"diff {entry[CASES]} {entry[CASES_ORIGINAL]}")
     out.append(entry)
 
