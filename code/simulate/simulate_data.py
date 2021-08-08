@@ -37,6 +37,8 @@ def FindFirstLast(entries):
 
 def SimulateData(entries):
   out = []
+  for entry in entries:
+    entry[CASES_ORIGINAL] = entry[CASES]
   first_index, last_index = FindFirstLast(entries)
   if first_index is None:
     logging.info(f"Skipping {entry['adm1_name']}")
@@ -58,6 +60,7 @@ def SimulateData(entries):
       math.log(last_cases) -
       daily_diff * index_day)
     entry[CASES] = str(int(cases))
+    logging.info(f"diff {entry[CASES]} {entry[CASES_ORIGINAL]}")
     out.append(entry)
 
   out.extend(entries[last_index + 1:])
@@ -89,8 +92,10 @@ def main(argv):
   with open(in_fn) as csvfile:
     entries = csv.DictReader(csvfile)
     simulated = Process(entries)
-    writer = csv.DictWriter(sys.stdout, fieldnames=entries.fieldnames,
-                            lineterminator="\r\n")
+    fieldnames = list(entries.fieldnames)
+    fieldnames.insert(fieldnames.index(CASES) + 1, CASES_ORIGINAL)
+    writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames,
+                            lineterminator="\n")
     writer.writeheader()
     writer.writerows(simulated)
 
