@@ -73,13 +73,13 @@ class GeometricInterpolator(Interpolator):
     return self.first_cases * (self.r**(day+1) - 1)/(self.r-1)
 
 
-def SimulateData(entries):
+def SimulateData(entries, adm_field):
   out = []
   for entry in entries:
     entry[CASES_ORIGINAL] = entry[CASES]
   first_index, last_index = FindFirstLast(entries)
   if first_index is None:
-    logging.info(f"Skipping {entry['adm1_name']}")
+    logging.info(f"Skipping {entry[adm1_field]}")
     return entries
 
   first = entries[first_index]
@@ -107,18 +107,18 @@ def SimulateData(entries):
   return out
 
 
-def Process(entries):
-  adm1s = defaultdict(lambda: [])
+def Process(entries, adm_field):
+  adms = defaultdict(lambda: [])
   names = []
   for entry in entries:
-    name = entry['adm1_name']
-    adm1s[name].append(entry)
+    name = entry[adm_field]
+    adms[name].append(entry)
     if name not in names:
       names.append(name)
   simulated = []
   for name in names:
     logging.info(f"doing {name}")
-    simulated.extend(SimulateData(adm1s[name]))
+    simulated.extend(SimulateData(adms[name], adm_field))
 
   return simulated
 
@@ -128,9 +128,10 @@ def main(argv):
     raise ValueError('Too many command-line arguments.')
 
   in_fn = argv[1]
+  adm_field = "adm1_name" if "adm1" in in_fn else "adm2_name"
   with open(in_fn) as csvfile:
     entries = csv.DictReader(csvfile)
-    simulated = Process(entries)
+    simulated = Process(entries, adm_field)
     fieldnames = list(entries.fieldnames)
     fieldnames.insert(fieldnames.index(CASES) + 1, CASES_ORIGINAL)
     writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames,
