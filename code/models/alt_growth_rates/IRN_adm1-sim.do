@@ -10,7 +10,7 @@ keep if tag == "default"
 local end_sample = end_date[1]
 
 // load data
-insheet using data/processed/adm1/IRN_processed.csv, clear 
+insheet using data/processed/adm1/IRN_simulated.csv, clear 
 
 // set up time variables
 gen t = date(date, "YMD")
@@ -126,7 +126,7 @@ lab var p_2 "Home isolation"
 outsheet using "models/reg_data/IRN_reg_data.csv", comma replace
 
 // main regression model
-reghdfe D_l_cum_confirmed_cases p_* testing_regime_*, absorb(i.adm1_id i.dow, savefe) cluster(date) resid
+reghdfe D_l_cum_confirmed_cases p_*, absorb(i.adm1_id i.dow, savefe) cluster(date) resid
 
 outreg2 using "results/tables/reg_results/IRN_estimates_table", sideway noparen nodepvar word replace label ///
  title(Iran, "Dependent variable: growth rate of cumulative confirmed cases (\u0916?log per day\'29") ///

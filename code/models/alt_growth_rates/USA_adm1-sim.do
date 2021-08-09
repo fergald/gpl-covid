@@ -15,7 +15,7 @@ tempfile state_abb
 save `state_abb'
 
 // load data
-insheet using data/processed/adm1/USA_processed.csv, clear 
+insheet using data/processed/adm1/USA_simulated.csv, clear 
 
 // set up time variables
 gen t = date(date, "YMD",2020)
@@ -151,7 +151,7 @@ lab var p_11 "Slow the Spread Guidelines"
 outsheet using "models/reg_data/USA_reg_data.csv", comma replace
 
 // main regression model
-reghdfe D_l_cum_confirmed_cases p_* testing_regime_*, absorb(i.adm1_id i.dow, savefe) cluster(t) resid
+reghdfe D_l_cum_confirmed_cases p_*, absorb(i.adm1_id i.dow, savefe) cluster(t) resid
 est store base
 
 outreg2 using "results/tables/reg_results/USA_estimates_table", sideway noparen nodepvar word replace label ///

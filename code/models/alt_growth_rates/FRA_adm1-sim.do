@@ -10,7 +10,7 @@ keep if tag == "default"
 local end_sample = end_date[1]
 
 // load data
-insheet using data/processed/adm1/FRA_processed.csv, clear 
+insheet using data/processed/adm1/FRA_simulated.csv, clear 
  
 // set up time variables
 gen t = date(date, "YMD")
