@@ -148,6 +148,7 @@ code/api_keys.json
 results/*
 # except for:
 !results/source_data/
+!results/rendered-logs.md
 results/source_data/indiv
 
 # isort
