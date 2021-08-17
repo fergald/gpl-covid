@@ -135,7 +135,7 @@ lab var p_4 "Quarantine positive cases"
 outsheet using "models/reg_data/KOR_reg_data.csv", comma replace
 
 // main regression model
-reghdfe D_l_active_cases p_*, absorb(i.adm1_id i.dow, savefe) cluster(t) resid
+reghdfe D_l_active_cases p_* testing_regime_change_*, absorb(i.adm1_id i.dow, savefe) cluster(t) resid
 
 outreg2 using "results/tables/reg_results/KOR_estimates_table", sideway noparen nodepvar word replace label ///
  title(South Korea, "Dependent variable: growth rate of active cases (\u0916?log per day\'29") ///

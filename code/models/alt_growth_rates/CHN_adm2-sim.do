@@ -196,7 +196,7 @@ drop x1 x2 x3
 outsheet using "models/reg_data/CHN_reg_data.csv", comma replace
 
 // main regression model
-reghdfe D_l_active_cases emergency_declaration_L* travel_ban_local_L* home_isolation_L*, absorb(i.adm12_id, savefe) cluster(t) resid
+reghdfe D_l_active_cases emergency_declaration_L* travel_ban_local_L* home_isolation_L* testing_regime_change_* , absorb(i.adm12_id, savefe) cluster(t) resid
 est store base
 local r2 = e(r2)
 outreg2 using "results/tables/reg_results/CHN_estimates_table", sideway noparen nodepvar word replace label ///
