@@ -55,38 +55,45 @@ Absorbed degrees of freedom:
 
 ```
 . reghdfe D_l_active_cases emergency_declaration_L* travel_ban_local_L* home_is
-> olation_L*, absorb(i.adm12_id, savefe) cluster(t) resid
+> olation_L* testing_regime_change_* , absorb(i.adm12_id, savefe) cluster(t) re
+> sid
 (MWFE estimator converged in 1 iterations)
 
 HDFE Linear regression                            Number of obs   =      3,551
-Absorbing 1 HDFE group                            F(  15,     48) =      44.75
+Absorbing 1 HDFE group                            F(  21,     48) =    1348.90
 Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.3605
-                                                  Adj R-squared   =     0.3366
-                                                  Within R-sq.    =     0.3120
-Number of clusters (t)       =         49         Root MSE        =     0.1165
+                                                  R-squared       =     0.3641
+                                                  Adj R-squared   =     0.3392
+                                                  Within R-sq.    =     0.3159
+Number of clusters (t)       =         49         Root MSE        =     0.1163
 
                                      (Std. Err. adjusted for 49 clusters in t)
 ------------------------------------------------------------------------------
              |               Robust
 D_l_active~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-emergency_~7 |   -.197438   .0568653    -3.47   0.001    -.3117733   -.0831027
-emergency~14 |  -.3742541   .0534466    -7.00   0.000    -.4817157   -.2667925
-emergency~21 |  -.4265036   .0540383    -7.89   0.000    -.5351548   -.3178524
-emergency~28 |  -.4336545   .0551667    -7.86   0.000    -.5445745   -.3227345
-emergency~70 |  -.4174592   .0567301    -7.36   0.000    -.5315228   -.3033956
-travel_ban~7 |   .0301714   .0179879     1.68   0.100    -.0059957    .0663386
-travel_ba~14 |   .0093372   .0246053     0.38   0.706    -.0401351    .0588094
-travel_ba~21 |  -.0112671      .0314    -0.36   0.721     -.074401    .0518668
-travel_ba~28 |  -.0208162   .0389857    -0.53   0.596    -.0992021    .0575697
-travel_ba~70 |  -.0401974   .0493188    -0.82   0.419    -.1393595    .0589646
-home_isola~7 |  -.0550872   .0164499    -3.35   0.002     -.088162   -.0220124
-home_isol~14 |  -.0549068   .0216976    -2.53   0.015    -.0985327    -.011281
-home_isol~21 |  -.0380604    .026352    -1.44   0.155    -.0910445    .0149238
-home_isol~28 |   .0296319   .0306765     0.97   0.339    -.0320473     .091311
-home_isol~70 |   .1027605   .0413689     2.48   0.017     .0195828    .1859381
-       _cons |   .5105748   .0507364    10.06   0.000     .4085623    .6125872
+emergency_~7 |  -.1802557   .0530142    -3.40   0.001    -.2868479   -.0736635
+emergency~14 |    -.34904   .0479086    -7.29   0.000    -.4453668   -.2527133
+emergency~21 |  -.4091947   .0494539    -8.27   0.000    -.5086284    -.309761
+emergency~28 |  -.4183063   .0507664    -8.24   0.000    -.5203791   -.3162336
+emergency~70 |  -.4025073   .0527611    -7.63   0.000    -.5085905   -.2964241
+travel_ban~7 |   .0360828   .0181105     1.99   0.052    -.0003308    .0724964
+travel_ba~14 |    .018224   .0242832     0.75   0.457    -.0306007    .0670487
+travel_ba~21 |    .000073   .0310504     0.00   0.998    -.0623581     .062504
+travel_ba~28 |  -.0074037   .0382233    -0.19   0.847    -.0842568    .0694494
+travel_ba~70 |  -.0231663   .0482332    -0.48   0.633    -.1201457    .0738131
+home_isola~7 |  -.0550441   .0170824    -3.22   0.002    -.0893906   -.0206976
+home_isol~14 |  -.0567517   .0217834    -2.61   0.012    -.1005503   -.0129532
+home_isol~21 |   -.041831    .025853    -1.62   0.112     -.093812      .01015
+home_isol~28 |    .024414   .0305734     0.80   0.428    -.0370579     .085886
+home_isol~70 |    .094934    .040944     2.32   0.025     .0126106    .1772574
+te~18jan2020 |   .3734618   .0455908     8.19   0.000     .2817954    .4651282
+te~28jan2020 |   .0431452   .0328172     1.31   0.195    -.0228382    .1091285
+tes~6feb2020 |  -.0348704   .0144591    -2.41   0.020    -.0639423   -.0057985
+tes~3feb2020 |  -.0041118   .0025605    -1.61   0.115      -.00926    .0010364
+tes~0feb2020 |   .0031199   .0026235     1.19   0.240    -.0021549    .0083947
+testin~r2020 |  -.0011107   .0116184    -0.10   0.924    -.0244711    .0222497
+       _cons |   .4864286   .0449904    10.81   0.000     .3959694    .5768878
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -102,26 +109,27 @@ Absorbed degrees of freedom:
 ```
 . reghdfe D_l_cum_confirmed_cases pck_social_distance school_closure_popw natio
 > nal_lockdown ///
->  , absorb(i.adm1_id i.dow, savefe) cluster(t) resid  
+>  testing_regime_*, absorb(i.adm1_id i.dow, savefe) cluster(t) resid  
 (MWFE estimator converged in 4 iterations)
 
 HDFE Linear regression                            Number of obs   =        270
-Absorbing 2 HDFE groups                           F(   3,     22) =      22.39
+Absorbing 2 HDFE groups                           F(   4,     22) =      34.65
 Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.2845
-                                                  Adj R-squared   =     0.2239
-                                                  Within R-sq.    =     0.1861
-Number of clusters (t)       =         23         Root MSE        =     0.1326
+                                                  R-squared       =     0.2987
+                                                  Adj R-squared   =     0.2362
+                                                  Within R-sq.    =     0.2022
+Number of clusters (t)       =         23         Root MSE        =     0.1315
 
                                      (Std. Err. adjusted for 23 clusters in t)
 ------------------------------------------------------------------------------
              |               Robust
 D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-pck_social~e |  -.2309569   .0738442    -3.13   0.005    -.3841005   -.0778133
-school_clo~t |   .0288132   .0477682     0.60   0.553    -.0702519    .1278783
-national_l~n |   .0338409   .0537191     0.63   0.535    -.0775657    .1452476
-       _cons |    .318286   .0236971    13.43   0.000     .2691411    .3674308
+pck_social~e |  -.2429037   .0719206    -3.38   0.003    -.3920578   -.0937496
+school_clo~t |  -.0092628   .0417134    -0.22   0.826    -.0957711    .0772455
+national_l~n |   .0831272   .0523789     1.59   0.127       -.0255    .1917545
+testing~2020 |  -.1116384   .0205793    -5.42   0.000    -.1543171   -.0689596
+       _cons |   .3345041   .0216868    15.42   0.000     .2895285    .3794797
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -140,21 +148,21 @@ Absorbed degrees of freedom:
 > vefe) cluster(t) resid  
 (MWFE estimator converged in 4 iterations)
 
-HDFE Linear regression                            Number of obs   =        292
-Absorbing 2 HDFE groups                           F(   1,     24) =      60.54
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.7665
-                                                  Adj R-squared   =     0.7501
-                                                  Within R-sq.    =     0.3075
-Number of clusters (t)       =         25         Root MSE        =     0.0284
+HDFE Linear regression                            Number of obs   =        252
+Absorbing 2 HDFE groups                           F(   1,     24) =       4.76
+Statistics robust to heteroskedasticity           Prob > F        =     0.0391
+                                                  R-squared       =     0.9547
+                                                  Adj R-squared   =     0.9510
+                                                  Within R-sq.    =     0.0425
+Number of clusters (t)       =         25         Root MSE        =     0.0106
 
                                      (Std. Err. adjusted for 25 clusters in t)
 ------------------------------------------------------------------------------
              |               Robust
 D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-national_l~n |  -.0488984   .0062847    -7.78   0.000    -.0618694   -.0359274
-       _cons |   .2017971   .0044219    45.64   0.000     .1926709    .2109234
+national_l~n |  -.0059318    .002718    -2.18   0.039    -.0115416   -.0003221
+       _cons |   .2313944   .0018493   125.13   0.000     .2275777    .2352111
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -166,70 +174,36 @@ Absorbed degrees of freedom:
 -----------------------------------------------------+
 
 ```
-# FRA_adm1-pck_social_distance.log
-
 ```
-. reghdfe D_l_cum_confirmed_cases pck_social_distance, absorb(i.adm1_id i.dow, 
-> savefe) cluster(t) resid  
+. reghdfe D_l_cum_confirmed_cases national_lockdown, absorb(i.adm1_id i.dow, sa
+> vefe) cluster(i.adm1_id t) resid
 (MWFE estimator converged in 4 iterations)
 
-HDFE Linear regression                            Number of obs   =        292
-Absorbing 2 HDFE groups                           F(   1,     24) =     121.84
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.7818
-                                                  Adj R-squared   =     0.7666
-                                                  Within R-sq.    =     0.3530
-Number of clusters (t)       =         25         Root MSE        =     0.0275
+HDFE Linear regression                            Number of obs   =        252
+Absorbing 2 HDFE groups                           F(   1,     12) =       6.92
+Statistics robust to heteroskedasticity           Prob > F        =     0.0220
+                                                  R-squared       =     0.9547
+                                                  Adj R-squared   =     0.9508
+Number of clusters (adm1_id) =         13         Within R-sq.    =     0.0425
+Number of clusters (t)       =         25         Root MSE        =     0.0107
 
-                                     (Std. Err. adjusted for 25 clusters in t)
+                             (Std. Err. adjusted for 13 clusters in adm1_id t)
 ------------------------------------------------------------------------------
              |               Robust
 D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-pck_social~e |  -.0529012   .0047925   -11.04   0.000    -.0627924   -.0430099
-       _cons |   .2146431   .0040404    53.12   0.000     .2063041    .2229822
+national_l~n |  -.0059318   .0022552    -2.63   0.022    -.0108455   -.0010182
+       _cons |   .2313944   .0011792   196.22   0.000     .2288251    .2339638
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
 -----------------------------------------------------+
  Absorbed FE | Categories  - Redundant  = Num. Coefs |
 -------------+---------------------------------------|
-     adm1_id |        13           0          13     |
-         dow |         7           1           6     |
+     adm1_id |        13          13           0    *|
+         dow |         7           0           7     |
 -----------------------------------------------------+
-
-```
-# FRA_adm1-school_closure_popw.log
-
-```
-. reghdfe D_l_cum_confirmed_cases school_closure_popw, absorb(i.adm1_id i.dow, 
-> savefe) cluster(t) resid  
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =        292
-Absorbing 2 HDFE groups                           F(   1,     24) =      78.65
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.7645
-                                                  Adj R-squared   =     0.7480
-                                                  Within R-sq.    =     0.3016
-Number of clusters (t)       =         25         Root MSE        =     0.0286
-
-                                     (Std. Err. adjusted for 25 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-school_clo~t |  -.0443824   .0050044    -8.87   0.000     -.054711   -.0340537
-       _cons |   .2086796   .0046621    44.76   0.000     .1990574    .2183018
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        13           0          13     |
-         dow |         7           1           6     |
------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
 
 ```
 # FRA_adm1-sim.log
@@ -300,6 +274,38 @@ Absorbed degrees of freedom:
      adm1_id |        13           0          13     |
          dow |         7           1           6     |
 -----------------------------------------------------+
+
+```
+```
+. reghdfe D_l_cum_confirmed_cases national_lockdown, absorb(i.adm1_id i.dow, sa
+> vefe) cluster(i.adm1_id t) resid
+(MWFE estimator converged in 4 iterations)
+
+HDFE Linear regression                            Number of obs   =        292
+Absorbing 2 HDFE groups                           F(   1,     12) =      22.47
+Statistics robust to heteroskedasticity           Prob > F        =     0.0005
+                                                  R-squared       =     0.7665
+                                                  Adj R-squared   =     0.7492
+Number of clusters (adm1_id) =         13         Within R-sq.    =     0.3075
+Number of clusters (t)       =         25         Root MSE        =     0.0285
+
+                             (Std. Err. adjusted for 13 clusters in adm1_id t)
+------------------------------------------------------------------------------
+             |               Robust
+D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+national_l~n |  -.0488984   .0103152    -4.74   0.000    -.0713734   -.0264235
+       _cons |   .2017971   .0045956    43.91   0.000     .1917841    .2118102
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+-----------------------------------------------------+
+ Absorbed FE | Categories  - Redundant  = Num. Coefs |
+-------------+---------------------------------------|
+     adm1_id |        13          13           0    *|
+         dow |         7           0           7     |
+-----------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
 
 ```
 # FRA_adm1-sim-pck_social_distance.log
@@ -403,95 +409,30 @@ Absorbed degrees of freedom:
 -----------------------------------------------------+
 
 ```
-# IRN_adm1-p_1.log
-
-```
-. reghdfe D_l_cum_confirmed_cases p_1, absorb(i.adm1_id i.dow, savefe) cluster(
-> date) resid
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =        583
-Absorbing 2 HDFE groups                           F(   1,     21) =      81.98
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.6213
-                                                  Adj R-squared   =     0.5955
-                                                  Within R-sq.    =     0.2587
-Number of clusters (date)    =         22         Root MSE        =     0.0310
-
-                                  (Std. Err. adjusted for 22 clusters in date)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         p_1 |  -.1458022    .016103    -9.05   0.000    -.1792902   -.1123143
-       _cons |   .2879468   .0124496    23.13   0.000     .2620564    .3138372
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        31           0          31     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
-# IRN_adm1-p_2.log
-
-```
-. reghdfe D_l_cum_confirmed_cases p_2, absorb(i.adm1_id i.dow, savefe) cluster(
-> date) resid
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =        583
-Absorbing 2 HDFE groups                           F(   1,     21) =      53.12
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.6522
-                                                  Adj R-squared   =     0.6286
-                                                  Within R-sq.    =     0.3193
-Number of clusters (date)    =         22         Root MSE        =     0.0297
-
-                                  (Std. Err. adjusted for 22 clusters in date)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         p_2 |  -.0412125   .0056543    -7.29   0.000    -.0529714   -.0294537
-       _cons |   .1935692   .0054403    35.58   0.000     .1822555    .2048829
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        31           0          31     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
 # IRN_adm1-sim.log
 
 ```
-. reghdfe D_l_cum_confirmed_cases p_*, absorb(i.adm1_id i.dow, savefe) cluster(
-> date) resid
+. reghdfe D_l_cum_confirmed_cases p_* testing_regime_*, absorb(i.adm1_id i.dow,
+>  savefe) cluster(date) resid
 (MWFE estimator converged in 4 iterations)
 
 HDFE Linear regression                            Number of obs   =        583
-Absorbing 2 HDFE groups                           F(   2,     21) =      97.58
+Absorbing 2 HDFE groups                           F(   3,     21) =      76.36
 Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.7240
-                                                  Adj R-squared   =     0.7047
-                                                  Within R-sq.    =     0.4597
-Number of clusters (date)    =         22         Root MSE        =     0.0265
+                                                  R-squared       =     0.7255
+                                                  Adj R-squared   =     0.7058
+                                                  Within R-sq.    =     0.4628
+Number of clusters (date)    =         22         Root MSE        =     0.0264
 
                                   (Std. Err. adjusted for 22 clusters in date)
 ------------------------------------------------------------------------------
              |               Robust
 D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-         p_1 |  -.1112358   .0144342    -7.71   0.000    -.1412534   -.0812182
-         p_2 |  -.0338606   .0038829    -8.72   0.000    -.0419356   -.0257856
-       _cons |   .2783815   .0111504    24.97   0.000     .2551929    .3015701
+         p_1 |  -.1116594   .0136009    -8.21   0.000     -.139944   -.0833748
+         p_2 |  -.0346092   .0040523    -8.54   0.000    -.0430364   -.0261819
+testing~2020 |   .0104432    .005772     1.81   0.085    -.0015603    .0224466
+       _cons |    .278562    .010331    26.96   0.000     .2570775    .3000466
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -883,163 +824,35 @@ Absorbed degrees of freedom:
 -----------------------------------------------------+
 
 ```
-# KOR_adm1-p_1.log
-
-```
-. reghdfe D_l_active_cases p_1, absorb(i.adm1_id i.dow, savefe) cluster(t) resi
-> d
-(MWFE estimator converged in 3 iterations)
-
-HDFE Linear regression                            Number of obs   =        706
-Absorbing 2 HDFE groups                           F(   1,     48) =      46.60
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.1713
-                                                  Adj R-squared   =     0.1434
-                                                  Within R-sq.    =     0.1109
-Number of clusters (t)       =         49         Root MSE        =     0.1672
-
-                                     (Std. Err. adjusted for 49 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_active~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         p_1 |  -.2033166    .029783    -6.83   0.000    -.2631992   -.1434339
-       _cons |   .2185396   .0215752    10.13   0.000     .1751597    .2619195
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        17           0          17     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
-# KOR_adm1-p_2.log
-
-```
-. reghdfe D_l_active_cases p_2, absorb(i.adm1_id i.dow, savefe) cluster(t) resi
-> d
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =        706
-Absorbing 2 HDFE groups                           F(   1,     48) =      62.37
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.2035
-                                                  Adj R-squared   =     0.1766
-                                                  Within R-sq.    =     0.1454
-Number of clusters (t)       =         49         Root MSE        =     0.1639
-
-                                     (Std. Err. adjusted for 49 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_active~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         p_2 |  -.4391511   .0556075    -7.90   0.000    -.5509574   -.3273448
-       _cons |   .3846177   .0364372    10.56   0.000     .3113557    .4578797
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        17           0          17     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
-# KOR_adm1-p_3.log
-
-```
-. reghdfe D_l_active_cases p_3, absorb(i.adm1_id i.dow, savefe) cluster(t) resi
-> d
-(MWFE estimator converged in 3 iterations)
-
-HDFE Linear regression                            Number of obs   =        706
-Absorbing 2 HDFE groups                           F(   1,     48) =       0.02
-Statistics robust to heteroskedasticity           Prob > F        =     0.8837
-                                                  R-squared       =     0.0680
-                                                  Adj R-squared   =     0.0366
-                                                  Within R-sq.    =     0.0000
-Number of clusters (t)       =         49         Root MSE        =     0.1773
-
-                                     (Std. Err. adjusted for 49 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_active~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         p_3 |  -.0046645   .0317148    -0.15   0.884    -.0684313    .0591023
-       _cons |   .1099857   .0102258    10.76   0.000     .0894252    .1305461
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        17           0          17     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
-# KOR_adm1-p_4.log
-
-```
-. reghdfe D_l_active_cases p_4, absorb(i.adm1_id i.dow, savefe) cluster(t) resi
-> d
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =        706
-Absorbing 2 HDFE groups                           F(   1,     48) =       6.18
-Statistics robust to heteroskedasticity           Prob > F        =     0.0164
-                                                  R-squared       =     0.0766
-                                                  Adj R-squared   =     0.0455
-                                                  Within R-sq.    =     0.0092
-Number of clusters (t)       =         49         Root MSE        =     0.1765
-
-                                     (Std. Err. adjusted for 49 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_active~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         p_4 |  -.0552673   .0222236    -2.49   0.016    -.0999508   -.0105838
-       _cons |   .1213262   .0133265     9.10   0.000     .0945315     .148121
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        17           0          17     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
 # KOR_adm1-sim.log
 
 ```
-. reghdfe D_l_active_cases p_*, absorb(i.adm1_id i.dow, savefe) cluster(t) resi
-> d
+. reghdfe D_l_active_cases p_* testing_regime_change_*, absorb(i.adm1_id i.dow,
+>  savefe) cluster(t) resid
 (MWFE estimator converged in 4 iterations)
 
 HDFE Linear regression                            Number of obs   =        706
-Absorbing 2 HDFE groups                           F(   4,     48) =      27.92
+Absorbing 2 HDFE groups                           F(   8,     48) =      37.86
 Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.2340
-                                                  Adj R-squared   =     0.2047
-                                                  Within R-sq.    =     0.1782
-Number of clusters (t)       =         49         Root MSE        =     0.1611
+                                                  R-squared       =     0.2480
+                                                  Adj R-squared   =     0.2146
+                                                  Within R-sq.    =     0.1932
+Number of clusters (t)       =         49         Root MSE        =     0.1601
 
                                      (Std. Err. adjusted for 49 clusters in t)
 ------------------------------------------------------------------------------
              |               Robust
 D_l_active~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-         p_1 |  -.1598177   .0326565    -4.89   0.000     -.225478   -.0941574
-         p_2 |  -.3005542   .0705621    -4.26   0.000    -.4424288   -.1586795
-         p_3 |   .0726989   .0281114     2.59   0.013     .0161772    .1292207
-         p_4 |   .0486916   .0120277     4.05   0.000     .0245082     .072875
-       _cons |   .3684197   .0376389     9.79   0.000     .2927416    .4440978
+         p_1 |  -.1440465    .033358    -4.32   0.000    -.2111172   -.0769758
+         p_2 |   -.357495   .0567462    -6.30   0.000    -.4715909   -.2433992
+         p_3 |   .0758065   .0280079     2.71   0.009     .0194928    .1321201
+         p_4 |   .0477061   .0132649     3.60   0.001     .0210352     .074377
+tes~0feb2020 |  -.2697992    .036592    -7.37   0.000    -.3433724    -.196226
+tes~9feb2020 |   .0604647   .0183124     3.30   0.002     .0236452    .0972842
+tes~2mar2020 |  -.0340091   .0163392    -2.08   0.043    -.0668612    -.001157
+tes~7mar2020 |  -.0468114    .022731    -2.06   0.045    -.0925151   -.0011077
+       _cons |    .398162   .0275806    14.44   0.000     .3427074    .4536165
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
@@ -1183,59 +996,6 @@ Absorbed degrees of freedom:
 -----------------------------------------------------+
 
 ```
-# MASTER_run_all_reg.log
-
-```
-. reghdfe D_l_active_cases emergency_declaration_L* travel_ban_local_L* home_is
-> olation_L* testing_regime_change_* , absorb(i.adm12_id, savefe) cluster(t) re
-> sid
-(MWFE estimator converged in 1 iterations)
-
-HDFE Linear regression                            Number of obs   =      3,669
-Absorbing 1 HDFE group                            F(  21,     47) =    4205.85
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.5975
-                                                  Adj R-squared   =     0.5821
-                                                  Within R-sq.    =     0.5608
-Number of clusters (t)       =         48         Root MSE        =     0.0728
-
-                                     (Std. Err. adjusted for 48 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_active~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-emergency_~7 |  -.0115442   .0434681    -0.27   0.792    -.0989906    .0759023
-emergency~14 |  -.1731809   .0456965    -3.79   0.000    -.2651104   -.0812513
-emergency~21 |  -.2340776   .0465269    -5.03   0.000    -.3276776   -.1404775
-emergency~28 |  -.2504335   .0467327    -5.36   0.000    -.3444477   -.1564194
-emergency~70 |  -.2477916   .0473942    -5.23   0.000    -.3431364   -.1524469
-travel_ban~7 |   .0150441   .0155422     0.97   0.338    -.0162227    .0463109
-travel_ba~14 |  -.0091802   .0182836    -0.50   0.618    -.0459621    .0276017
-travel_ba~21 |  -.0311922   .0235012    -1.33   0.191    -.0784705    .0160861
-travel_ba~28 |  -.0476004   .0289415    -1.64   0.107    -.1058231    .0106224
-travel_ba~70 |  -.0792491   .0381836    -2.08   0.043    -.1560645   -.0024337
-home_isola~7 |  -.0290876   .0138749    -2.10   0.041    -.0570002    -.001175
-home_isol~14 |  -.0212651   .0172094    -1.24   0.223     -.055886    .0133558
-home_isol~21 |  -.0140919   .0213041    -0.66   0.512    -.0569502    .0287664
-home_isol~28 |  -.0034785   .0266978    -0.13   0.897    -.0571876    .0502306
-home_isol~70 |   .0349028   .0373555     0.93   0.355    -.0402467    .1100524
-te~18jan2020 |    .487551   .0458448    10.63   0.000     .3953232    .5797787
-te~28jan2020 |   .0652789   .0151059     4.32   0.000     .0348896    .0956681
-tes~6feb2020 |  -.0389732   .0117854    -3.31   0.002    -.0626823   -.0152641
-tes~3feb2020 |  -.0019536   .0020971    -0.93   0.356    -.0061724    .0022653
-tes~0feb2020 |  -.0050039   .0019712    -2.54   0.015    -.0089695   -.0010383
-testin~r2020 |  -.0058608   .0048913    -1.20   0.237    -.0157008    .0039792
-       _cons |   .3094195   .0449108     6.89   0.000     .2190707    .3997684
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-    adm12_id |       115           0         115     |
------------------------------------------------------+
-
-```
 # USA_adm1.log
 
 ```
@@ -1296,401 +1056,55 @@ Absorbed degrees of freedom:
 -----------------------------------------------------+
 
 ```
-# USA_adm1-p10.log
-
-```
-. reghdfe D_l_cum_confirmed_cases p_10, absorb(i.adm1_id i.dow, savefe) cluster
-> (t) resid
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =      1,292
-Absorbing 2 HDFE groups                           F(   1,     33) =      66.00
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.4661
-                                                  Adj R-squared   =     0.4415
-                                                  Within R-sq.    =     0.1968
-Number of clusters (t)       =         34         Root MSE        =     0.0350
-
-                                     (Std. Err. adjusted for 34 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-        p_10 |  -.0423465   .0052124    -8.12   0.000    -.0529511   -.0317418
-       _cons |   .1399811   .0043248    32.37   0.000     .1311822      .14878
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        51           0          51     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
-# USA_adm1-p11.log
-
-```
-. reghdfe D_l_cum_confirmed_cases p_11, absorb(i.adm1_id i.dow, savefe) cluster
-> (t) resid
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =      1,292
-Absorbing 2 HDFE groups                           F(   1,     33) =     177.55
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.5372
-                                                  Adj R-squared   =     0.5159
-                                                  Within R-sq.    =     0.3038
-Number of clusters (t)       =         34         Root MSE        =     0.0326
-
-                                     (Std. Err. adjusted for 34 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-        p_11 |  -.0619954   .0046527   -13.32   0.000    -.0714613   -.0525295
-       _cons |    .177534   .0046106    38.51   0.000     .1681538    .1869142
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        51           0          51     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
-# USA_adm1-p1.log
-
-```
-. reghdfe D_l_cum_confirmed_cases p_1, absorb(i.adm1_id i.dow, savefe) cluster(
-> t) resid
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =      1,292
-Absorbing 2 HDFE groups                           F(   1,     33) =     128.45
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.5463
-                                                  Adj R-squared   =     0.5254
-                                                  Within R-sq.    =     0.3174
-Number of clusters (t)       =         34         Root MSE        =     0.0323
-
-                                     (Std. Err. adjusted for 34 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         p_1 |  -.0684078   .0060359   -11.33   0.000     -.080688   -.0561277
-       _cons |   .1707045   .0053699    31.79   0.000     .1597793    .1816296
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        51           0          51     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
-# USA_adm1-p2.log
-
-```
-. reghdfe D_l_cum_confirmed_cases p_2, absorb(i.adm1_id i.dow, savefe) cluster(
-> t) resid
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =      1,292
-Absorbing 2 HDFE groups                           F(   1,     33) =     143.60
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.6080
-                                                  Adj R-squared   =     0.5899
-                                                  Within R-sq.    =     0.4103
-Number of clusters (t)       =         34         Root MSE        =     0.0300
-
-                                     (Std. Err. adjusted for 34 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         p_2 |   -.163814   .0136703   -11.98   0.000    -.1916264   -.1360017
-       _cons |   .1699564   .0047122    36.07   0.000     .1603693    .1795435
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        51           0          51     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
-# USA_adm1-p3.log
-
-```
-. reghdfe D_l_cum_confirmed_cases p_3, absorb(i.adm1_id i.dow, savefe) cluster(
-> t) resid
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =      1,292
-Absorbing 2 HDFE groups                           F(   1,     33) =      32.17
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.3625
-                                                  Adj R-squared   =     0.3331
-                                                  Within R-sq.    =     0.0409
-Number of clusters (t)       =         34         Root MSE        =     0.0382
-
-                                     (Std. Err. adjusted for 34 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         p_3 |  -.0588316   .0103733    -5.67   0.000    -.0799362   -.0377269
-       _cons |    .132989   .0048772    27.27   0.000     .1230663    .1429118
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        51           0          51     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
-# USA_adm1-p4.log
-
-```
-. reghdfe D_l_cum_confirmed_cases p_4, absorb(i.adm1_id i.dow, savefe) cluster(
-> t) resid
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =      1,292
-Absorbing 2 HDFE groups                           F(   1,     33) =      27.75
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.4338
-                                                  Adj R-squared   =     0.4077
-                                                  Within R-sq.    =     0.1482
-Number of clusters (t)       =         34         Root MSE        =     0.0360
-
-                                     (Std. Err. adjusted for 34 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         p_4 |   -.156667   .0297429    -5.27   0.000    -.2171794   -.0961546
-       _cons |   .1843234   .0116409    15.83   0.000     .1606399     .208007
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        51           0          51     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
-# USA_adm1-p5.log
-
-```
-. reghdfe D_l_cum_confirmed_cases p_5, absorb(i.adm1_id i.dow, savefe) cluster(
-> t) resid
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =      1,292
-Absorbing 2 HDFE groups                           F(   1,     33) =      71.50
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.4852
-                                                  Adj R-squared   =     0.4614
-                                                  Within R-sq.    =     0.2255
-Number of clusters (t)       =         34         Root MSE        =     0.0344
-
-                                     (Std. Err. adjusted for 34 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         p_5 |  -.0497172   .0058797    -8.46   0.000    -.0616796   -.0377548
-       _cons |   .1474104   .0050367    29.27   0.000     .1371631    .1576577
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        51           0          51     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
-# USA_adm1-p6.log
-
-```
-. reghdfe D_l_cum_confirmed_cases p_6, absorb(i.adm1_id i.dow, savefe) cluster(
-> t) resid
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =      1,292
-Absorbing 2 HDFE groups                           F(   1,     33) =     158.26
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.5448
-                                                  Adj R-squared   =     0.5238
-                                                  Within R-sq.    =     0.3152
-Number of clusters (t)       =         34         Root MSE        =     0.0323
-
-                                     (Std. Err. adjusted for 34 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         p_6 |  -.0633905   .0050389   -12.58   0.000    -.0736422   -.0531388
-       _cons |   .1741249    .004301    40.48   0.000     .1653744    .1828753
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        51           0          51     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
-# USA_adm1-p7.log
-
-```
-. reghdfe D_l_cum_confirmed_cases p_7, absorb(i.adm1_id i.dow, savefe) cluster(
-> t) resid
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =      1,292
-Absorbing 2 HDFE groups                           F(   1,     33) =      75.61
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.4138
-                                                  Adj R-squared   =     0.3867
-                                                  Within R-sq.    =     0.1181
-Number of clusters (t)       =         34         Root MSE        =     0.0367
-
-                                     (Std. Err. adjusted for 34 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         p_7 |  -.0843119    .009696    -8.70   0.000    -.1040385   -.0645853
-       _cons |   .1378061   .0042999    32.05   0.000      .129058    .1465543
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        51           0          51     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
-# USA_adm1-p8.log
-
-```
-. reghdfe D_l_cum_confirmed_cases p_8, absorb(i.adm1_id i.dow, savefe) cluster(
-> t) resid
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =      1,292
-Absorbing 2 HDFE groups                           F(   1,     33) =     120.90
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.5656
-                                                  Adj R-squared   =     0.5455
-                                                  Within R-sq.    =     0.3465
-Number of clusters (t)       =         34         Root MSE        =     0.0316
-
-                                     (Std. Err. adjusted for 34 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         p_8 |  -.0604455   .0054973   -11.00   0.000    -.0716298   -.0492612
-       _cons |   .1604267   .0046211    34.72   0.000     .1510249    .1698285
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        51           0          51     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
-# USA_adm1-p9.log
-
-```
-. reghdfe D_l_cum_confirmed_cases p_9, absorb(i.adm1_id i.dow, savefe) cluster(
-> t) resid
-(MWFE estimator converged in 4 iterations)
-
-HDFE Linear regression                            Number of obs   =      1,292
-Absorbing 2 HDFE groups                           F(   1,     33) =      51.43
-Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.3697
-                                                  Adj R-squared   =     0.3406
-                                                  Within R-sq.    =     0.0518
-Number of clusters (t)       =         34         Root MSE        =     0.0380
-
-                                     (Std. Err. adjusted for 34 clusters in t)
-------------------------------------------------------------------------------
-             |               Robust
-D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         p_9 |  -.0379744   .0052954    -7.17   0.000    -.0487478   -.0272009
-       _cons |   .1300369    .004275    30.42   0.000     .1213395    .1387344
-------------------------------------------------------------------------------
-
-Absorbed degrees of freedom:
------------------------------------------------------+
- Absorbed FE | Categories  - Redundant  = Num. Coefs |
--------------+---------------------------------------|
-     adm1_id |        51           0          51     |
-         dow |         7           1           6     |
------------------------------------------------------+
-
-```
 # USA_adm1-sim.log
 
 ```
-. reghdfe D_l_cum_confirmed_cases p_*, absorb(i.adm1_id i.dow, savefe) cluster(
-> t) resid
+. reghdfe D_l_cum_confirmed_cases p_* testing_regime_*, absorb(i.adm1_id i.dow,
+>  savefe) cluster(t) resid
 (MWFE estimator converged in 4 iterations)
 
 HDFE Linear regression                            Number of obs   =      1,292
-Absorbing 2 HDFE groups                           F(  11,     33) =      82.60
+Absorbing 2 HDFE groups                           F(  28,     33) =     246.64
 Statistics robust to heteroskedasticity           Prob > F        =     0.0000
-                                                  R-squared       =     0.6512
-                                                  Adj R-squared   =     0.6321
-                                                  Within R-sq.    =     0.4752
-Number of clusters (t)       =         34         Root MSE        =     0.0284
+                                                  R-squared       =     0.6546
+                                                  Adj R-squared   =     0.6306
+                                                  Within R-sq.    =     0.4804
+Number of clusters (t)       =         34         Root MSE        =     0.0285
 
                                      (Std. Err. adjusted for 34 clusters in t)
 ------------------------------------------------------------------------------
              |               Robust
 D_l_cum_co~s |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-         p_1 |    .001017    .004806     0.21   0.834    -.0087609    .0107949
-         p_2 |  -.0946648   .0117848    -8.03   0.000    -.1186411   -.0706884
-         p_3 |   .0001436   .0089355     0.02   0.987    -.0180358    .0183229
-         p_4 |  -.0197911    .022237    -0.89   0.380    -.0650327    .0254505
-         p_5 |  -.0207478   .0037161    -5.58   0.000    -.0283082   -.0131874
-         p_6 |  -.0122473   .0031428    -3.90   0.000    -.0186415   -.0058531
-         p_7 |   .0057932   .0068363     0.85   0.403    -.0081153    .0197017
-         p_8 |  -.0168408   .0033124    -5.08   0.000    -.0235799   -.0101018
-         p_9 |   .0032907   .0038943     0.84   0.404    -.0046323    .0112136
-        p_10 |   .0169296   .0046401     3.65   0.001     .0074893    .0263699
-        p_11 |  -.0130426   .0047646    -2.74   0.010    -.0227362   -.0033491
-       _cons |   .1901811   .0089679    21.21   0.000     .1719358    .2084263
+         p_1 |   .0010349   .0048875     0.21   0.834    -.0089087    .0109785
+         p_2 |   -.095937   .0115477    -8.31   0.000     -.119431   -.0724429
+         p_3 |   .0003071   .0090837     0.03   0.973    -.0181738    .0187881
+         p_4 |  -.0193045   .0226749    -0.85   0.401     -.065437     .026828
+         p_5 |   -.021537   .0037407    -5.76   0.000    -.0291474   -.0139266
+         p_6 |  -.0121019   .0030598    -3.96   0.000     -.018327   -.0058767
+         p_7 |   .0061068    .006919     0.88   0.384      -.00797    .0201835
+         p_8 |  -.0173672   .0032823    -5.29   0.000    -.0240451   -.0106893
+         p_9 |   .0029481    .003864     0.76   0.451    -.0049133    .0108095
+        p_10 |   .0180861   .0046609     3.88   0.000     .0086035    .0275688
+        p_11 |  -.0129905   .0049683    -2.61   0.013    -.0230986   -.0028825
+testing_re~Y |  -.0577312   .0062108    -9.30   0.000    -.0703671   -.0450952
+testing_r~CA |   .0062074   .0050274     1.23   0.226     -.004021    .0164357
+testing_re~C |  -.0006829   .0033537    -0.20   0.840    -.0075061    .0061404
+testing_r~CT |   .0280208   .0081178     3.45   0.002      .011505    .0445367
+testing_re~V |  -.0237392   .0048117    -4.93   0.000    -.0335287   -.0139498
+testing_r~UT |  -.0237497   .0047425    -5.01   0.000    -.0333985   -.0141009
+testing_r~IA |  -.0181337   .0125697    -1.44   0.159    -.0437069    .0074394
+testing_re~N |  -.0323282   .0053423    -6.05   0.000    -.0431972   -.0214591
+testing_re~L |  -.0075803   .0165679    -0.46   0.650    -.0412879    .0261273
+testing_re~I |  -.0195708   .0083357    -2.35   0.025    -.0365299   -.0026117
+testing_re~S |    .030344   .0058648     5.17   0.000      .018412    .0422761
+testing_re~J |  -.0019964   .0048768    -0.41   0.685    -.0119183    .0079254
+testing_re~H |  -.0062982   .0060789    -1.04   0.308    -.0186659    .0060695
+testing_re~Z |   .0336161   .0097254     3.46   0.002     .0138297    .0534025
+testing_re~D |  -.0169764   .0065856    -2.58   0.015     -.030375   -.0035778
+testing_re~O |   .0026363   .0039222     0.67   0.506    -.0053434    .0106161
+testing_re~E |  -.0291142    .009498    -3.07   0.004    -.0484381   -.0097904
+       _cons |   .1905137   .0090042    21.16   0.000     .1721945    .2088329
 ------------------------------------------------------------------------------
 
 Absorbed degrees of freedom:
