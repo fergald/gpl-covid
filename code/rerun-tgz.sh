@@ -1,5 +1,5 @@
 #! /bin/bash -e
 
-rm *.log
-./code/run_simulated.sh
+rm *.log || true
+./code/run_all_countries.sh
 tar -zcvf ../gpl-covid-logs.tgz *.log
