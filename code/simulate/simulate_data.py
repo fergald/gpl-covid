@@ -10,6 +10,7 @@ NPI will erroneously find impact when there is none. This erroroneous
 impact comes from the use of cumulative confirmed cases instead of
 daily confirmed cases to estimate the growth rate.
 """
+import argparse
 import csv
 import datetime
 import logging
@@ -83,7 +84,7 @@ class GeometricInterpolator(Interpolator):
     return self.first_cases * (self.r**(day+1) - 1)/(self.r-1)
 
 
-def SimulateData(entries, adm_field):
+def SimulateData(entries, adm_field, cumulative):
   out = []
   for entry in entries:
     entry[CASES_ORIGINAL] = entry[CASES]
@@ -111,6 +112,12 @@ def SimulateData(entries, adm_field):
     date = datetime.date.fromisoformat(entry['date'])
     index_day = (date-first_date).days
     cases = interpolator.CumCases(index_day)
+    if not cumulative:
+      if index_day == first_index:
+        last_cases = 0
+      else:
+        last_cases = interpolator.CumCases(index_day - 1)
+      cases -= last_cases
     entry[CASES] = str(int(math.floor(cases+.5)))
     logging.info(f"diff {entry[CASES]} {entry[CASES_ORIGINAL]}")
     out.append(entry)
@@ -120,7 +127,7 @@ def SimulateData(entries, adm_field):
   return out
 
 
-def Process(entries, adm_field):
+def Process(entries, adm_field, cumulative):
   adms = defaultdict(lambda: [])
   names = []
   for entry in entries:
@@ -131,20 +138,24 @@ def Process(entries, adm_field):
   simulated = []
   for name in names:
     logging.info(f"doing {name}")
-    simulated.extend(SimulateData(adms[name], adm_field))
+    simulated.extend(SimulateData(adms[name], adm_field, cumulative))
 
   return simulated
 
 
 def main(argv):
-  if len(argv) > 2:
-    raise ValueError('Too many command-line arguments.')
+  parser = argparse.ArgumentParser()
+  parser.add_argument('--cases', type=str, choices=('cumulative', 'daily'),
+                      default='cumulative',
+                      help='Output cumulative cases')
+  parser.add_argument('in_fn', type=str, nargs=1)
+  args = parser.parse_args()
 
-  in_fn = argv[1]
+  in_fn, = args.in_fn
   adm_field = "adm1_name" if "adm1" in in_fn else "adm2_name"
   with open(in_fn) as csvfile:
     entries = csv.DictReader(csvfile)
-    simulated = Process(entries, adm_field)
+    simulated = Process(entries, adm_field, args.cases == 'cumulative')
     fieldnames = list(entries.fieldnames)
     fieldnames.insert(fieldnames.index(CASES) + 1, CASES_ORIGINAL)
     writer = csv.DictWriter(sys.stdout, fieldnames=fieldnames,
