@@ -4,11 +4,6 @@ clear all
 set scheme s1color
 //-----------------------setup
 
-ssc install ivreg2 // 30/06/21 Colin adds
-ssc install ivreghdfe // 08/07/21 Colin adds
-ssc install xtqptest // 14/06/21 Colin adds: install to run serial corr test
-ssc install actest // 15/06/21 Colin adds: to run serial corr test
-
 // import end of sample cut-off 
 import delim using code/data/cutoff_dates.csv, clear 
 keep if tag == "default"
@@ -112,22 +107,6 @@ outsheet using "models/reg_data/FRA_reg_data.csv", comma replace
 // main regression model
 reghdfe D_l_cum_confirmed_cases national_lockdown, absorb(i.adm1_id i.dow, savefe) cluster(t) resid  
 est store base
-
-// Sergio C proposed more robust SEs;
-reghdfe D_l_cum_confirmed_cases national_lockdown, absorb(i.adm1_id i.dow, savefe) cluster(i.adm1_id t) resid
-
-// Fails with error about dkraay
-// reghdfe D_l_cum_confirmed_cases national_lockdown, absorb(i.adm1_id i.dow, savefe) dkraay(#) resid
-
-// Sergio C suggested equivalent to BOBI regresion model
-// xtreg D_l_cum_confirmed_cases national_lockdown i.dow, vce(cluster t) fe
-
-areg D_l_cum_confirmed_cases national_lockdown i.dow, vce(cluster t) a(adm1_id)
-
-// Colin serial correlation diagnostic: 08/08/21
-// xtqptest _xtreg_resid, lags(1) // can't run w/o running xtregfirst
-// actest _reghdfe_resid, lags(1)
-
 
 outreg2 using "results/tables/reg_results/FRA_estimates_table", sideway noparen nodepvar word replace label ///
  title(France, "Dependent variable: growth rate of cumulative confirmed cases (\u0916?log per day\'29") ///
