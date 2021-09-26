@@ -130,8 +130,14 @@ def SimulateData(entries, adm_field, cumulative):
 def Process(entries, adm_field, cumulative):
   adms = defaultdict(lambda: [])
   names = []
-  for entry in entries:
+  # Preserve the order from the original file.
+  order = {}
+  def _OrderKey(e):
+    return (e[adm_field], e["date"])
+
+  for i, entry in enumerate(entries):
     name = entry[adm_field]
+    order[_OrderKey(entry)] = i
     adms[name].append(entry)
     if name not in names:
       names.append(name)
@@ -140,7 +146,7 @@ def Process(entries, adm_field, cumulative):
     logging.info(f"doing {name}")
     simulated.extend(SimulateData(adms[name], adm_field, cumulative))
 
-  return simulated
+  return sorted(simulated, key = lambda e: order[_OrderKey(e)])
 
 
 def main(argv):
